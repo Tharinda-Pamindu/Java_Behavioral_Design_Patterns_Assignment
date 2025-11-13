@@ -4,8 +4,9 @@ import java.util.Map;
 
 public class ShoppingCart {
 
-    private Map<String, Integer> items;
+    private final Map<String, Integer> items;
     private int subtotal;
+    private PaymentStrategy paymentStrategy;
 
     {
         items = new HashMap<>();
@@ -18,7 +19,7 @@ public class ShoppingCart {
         System.out.println("Added item worth " + amount);
     }
 
-    public void addItems(Map<String, Integer> items) {
+    public void addItemSet(Map<String, Integer> items) {
         if (items != null) {
             this.items.putAll(items);
 
@@ -41,7 +42,15 @@ public class ShoppingCart {
         return "Total " + subtotal;
     }
 
-    public void paymentStrategy(PaymentStrategy paymentStrategy) {
-        paymentStrategy.pay(subtotal);
+    public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+
+    public void checkout(){
+        try {
+            this.paymentStrategy.pay(subtotal);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Please set payment strategy first.");
+        }
     }
 }

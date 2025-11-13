@@ -6,7 +6,7 @@ public class Main {
         ShoppingCart cart = new ShoppingCart();
         cart.addItem("8GB RAM", 2500);
         cart.addItem("10GB RAM", 4500);
-        cart.addItems(Map.of(
+        cart.addItemSet(Map.of(
                 "I7 Processor", 35000,
                 "I5 Processor", 18000,
                 "I3 Processor", 8500
@@ -14,10 +14,17 @@ public class Main {
 
         System.out.println(cart.getSubtotal());
 
-        cart.paymentStrategy(new CreditCardPayment());
-        cart.paymentStrategy(new PayPalPayment());
-        cart.paymentStrategy(new UPIPayment());
-        cart.paymentStrategy(new CryptoPayment());
+        cart.setPaymentStrategy(new CreditCardPayment());
+        cart.checkout();
+
+        cart.setPaymentStrategy(new PayPalPayment());
+        cart.checkout();
+
+        cart.setPaymentStrategy(new UPIPayment());
+        cart.checkout();
+
+        cart.setPaymentStrategy(new CryptoPayment());
+        cart.checkout();
 
     }
 
