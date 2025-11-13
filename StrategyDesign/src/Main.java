@@ -12,10 +12,10 @@ public class Main {
                 "I3 Processor", 8500
         ));
 
-        System.out.println(cart.getSubtotal());
+        System.out.println("Total " + cart.getSubtotal());
 
-        cart.setPaymentStrategy(new CreditCardPayment());
         cart.checkout();
+        cart.setPaymentStrategy(new CreditCardPayment());
 
         cart.setPaymentStrategy(new PayPalPayment());
         cart.checkout();

@@ -1,4 +1,3 @@
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,14 +20,7 @@ public class ShoppingCart {
 
     public void addItemSet(Map<String, Integer> items) {
         if (items != null) {
-            this.items.putAll(items);
-
-            Collection<Integer> values = items.values();
-            for (Integer value : values) {
-                subtotal += value;
-                System.out.println("Added item worth " + value);
-            }
-
+            items.forEach(this::addItem);
         } else {
             System.out.println("items is null");
         }
@@ -38,19 +30,19 @@ public class ShoppingCart {
         items.forEach((i, v) -> System.out.println(i + " -> $" + v));
     }
 
-    public String getSubtotal() {
-        return "Total " + subtotal;
+    public int getSubtotal() {
+        return subtotal;
     }
 
     public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
         this.paymentStrategy = paymentStrategy;
     }
 
-    public void checkout(){
+    public void checkout() {
         try {
             this.paymentStrategy.pay(subtotal);
         } catch (NullPointerException e) {
-            throw new NullPointerException("Please set payment strategy first.");
+            System.out.println("Please set payment strategy first.");
         }
     }
 }
